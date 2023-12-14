@@ -6,7 +6,7 @@ dotenv.config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.9", // It might need 0.8.9v
+  solidity: "0.8.9",
   networks: {
     mumbai: {
       url: process.env.POLYGON_MUMBAI,
