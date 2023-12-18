@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Web3 from 'web3';
-import useMempoolMainnet from "./hooks/useMempoolMainnet";
+import useMempoolMainnet from "../../hooks/useMempoolMainnet";
 
 const ALCHEMY_MAINNET_WSSURL = import.meta.env.VITE_ALCHEMY_MAINNET_WSSURL;
 
