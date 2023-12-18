@@ -4,6 +4,7 @@ import { Modal, Input, InputNumber } from "antd";
 import { usePrepareContractWrite, useContractWrite, useWaitForTransaction } from "wagmi";
 import { sepolia } from "@wagmi/chains";
 import ABI from "../abi.json";
+import { ethers } from "ethers";
 
 // eslint-disable-next-line no-empty-pattern
 function RequestAndPay({ requests, getNameAndBalance }) {
@@ -15,20 +16,24 @@ function RequestAndPay({ requests, getNameAndBalance }) {
 
   const { config } = usePrepareContractWrite({
     chainId: sepolia.id,
-    address: "0x2E7789b11B5F6fcA05dC1dc74e7dA9C41500b3d7",
+    address: "0x2E7789b11B5F6fcA05dC1dc74e7dA9C41500b3d7", // Deployed contract address
     abi: ABI,
     functionName: "payRequest",
-    args: [0],
+    args: [0], // Always pay the first request on our list
     overrides: {
-      // value: String(Number(requests["1"][0] * 1e18)),
+      value: String(Number(requests["1"][0] * 1e18)), // 1 ether = 1e18 wei
     }
   });
 
   const { write, data } = useContractWrite(config);
 
+  const { isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  })
+
   const { config: configRequest } = usePrepareContractWrite({
     chainId: sepolia.id,
-    address: "0x2E7789b11B5F6fcA05dC1dc74e7dA9C41500b3d7",
+    address: "0x2E7789b11B5F6fcA05dC1dc74e7dA9C41500b3d7", // Deployed contract address
     abi: ABI,
     functionName: "createRequest",
     args: [requestAddress, requestAmount, requestMessage],
@@ -36,13 +41,15 @@ function RequestAndPay({ requests, getNameAndBalance }) {
 
   const { write: writeRequest, data: dataRequest } = useContractWrite(configRequest);
 
-  const { isSuccess } = useWaitForTransaction({
-    hash: data?.hash,
-  })
-
   const { isSuccess: isSuccessRequest } = useWaitForTransaction({
     hash: dataRequest?.hash,
   })
+
+  useEffect(() => {
+    if(isSuccess || isSuccessRequest){
+      getNameAndBalance();
+    }
+  }, [getNameAndBalance, isSuccess, isSuccessRequest])
 
   const showPayModal = () => {
     setPayModal(true);
@@ -58,12 +65,6 @@ function RequestAndPay({ requests, getNameAndBalance }) {
     setRequestModal(false);
   };
 
-  useEffect(() => {
-    if(isSuccess || isSuccessRequest){
-      getNameAndBalance();
-    }
-  }, [isSuccess,isSuccessRequest])
-
   return (
     <>
       <Modal
@@ -71,6 +72,7 @@ function RequestAndPay({ requests, getNameAndBalance }) {
         open={payModal}
         onOk={() => {
           hidePayModal();
+          write?.();
         }}
         onCancel={hidePayModal}
         okText="Proceed To Pay"
@@ -88,7 +90,12 @@ function RequestAndPay({ requests, getNameAndBalance }) {
         title="Request A Payment"
         open={requestModal}
         onOk={() => {
-          hideRequestModal();
+          if (requestAddress && ethers.utils.isAddress(requestAddress)) {
+            hideRequestModal();
+            writeRequest?.();
+          } else {
+            alert('Please enter a valid address!');
+          }
         }}
         onCancel={hideRequestModal}
         okText="Proceed To Request"

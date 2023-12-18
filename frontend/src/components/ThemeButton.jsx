@@ -5,7 +5,13 @@ const ThemeButton = () => {
     const { colorMode, toggleColorMode } = useColorMode();
 
     return (
-        <Button w={"40px"} h={"40px"} onClick={toggleColorMode} className="custom-button">
+        <Button 
+            w={"40px"} 
+            h={"40px"} 
+            onClick={toggleColorMode}
+            style={{ "borderRadius": 20 }}
+            className="custom-button"
+        >
             {colorMode === "light" ? <SunIcon fontSize={20} /> : <MoonIcon fontSize={20} />}
         </Button>
     )

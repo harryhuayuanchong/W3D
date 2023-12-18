@@ -1,5 +1,4 @@
 import "./App.css";
-import logo from "./logo.png";
 import { Layout } from "antd";
 import CurrentBalance from "./components/CurrentBalance";
 import RequestAndPay from "./components/RequestAndPay";
@@ -9,30 +8,13 @@ import { MainnetTracker, GasFeeTracker } from "./components/GasFeeTracker";
 import { Mempool, MempoolMonitor } from "./components/Mempool";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import ThemeButton from "./components/ThemeButton";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
 import { WalletInformation } from "./components/WalletInformation";
-import { useConnect, useAccount, useDisconnect } from "wagmi";
-import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+import { useAccount } from "wagmi";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
-
 const { Header, Content } = Layout;
-
-function DisplayElements() {
-  return (
-    <>
-      <div className="firstColumn">
-        <CurrentBalance />
-        <RequestAndPay />
-        <AccountDetails />
-      </div>
-      <div className="secondColumn">
-        <RecentActivity />
-      </div>
-    </>
-  )
-}
 
 function App() {
   const [name, setName] = useState("...");
@@ -42,10 +24,6 @@ function App() {
   const [requests, setRequests] = useState({ "1": [0], "0": [] });
 
   const { address, isConnected } = useAccount();
-  const { disconnect } = useDisconnect();
-  const { connect } = useConnect({
-    connector: new MetaMaskConnector()
-  })
 
   const getNameAndBalance = useCallback(async () => {
     const res = await axios.get("http://localhost:3001/sepolia/getNameAndBalance", {
@@ -62,22 +40,12 @@ function App() {
     setDollars(String(response.dollars));
     setHistory(response.history);
     setRequests(response.requests);
-  }, [address]); // 依赖数组包含 address，因为函数内部使用了它
+  }, [address]);
   
   useEffect(() => {
     if (!isConnected) return;
     getNameAndBalance();
-  }, [isConnected, getNameAndBalance]); // 添加 getNameAndBalance 作为依赖
-  
-
-  function disconnectAndSetNull() {
-    disconnect();
-    setName("...");
-    setBalance("...");
-    setDollars("...");
-    setHistory("...");
-    setRequests({ "1": [0], "0": [] });
-  }
+  }, [isConnected, getNameAndBalance]);
 
   return (
     <Router>
@@ -85,20 +53,20 @@ function App() {
           <Layout>
             <Header className="header">
               <div className="headerLeft">
-                <span><img src={logo} alt="logo" className="logo" /></span>
                 {isConnected && 
                   <>
-                    <Link to="/" className="menuOption" style={{ borderBottom: "1.5px solid black" }}>Summary</Link>
-                    <Link to="/info" className="menuOption">Info</Link>
-                    <Link to="/gas-fee" className="menuOption">Gas Fee</Link>
-                    <Link to="/mempool" className="menuOption">Mempool</Link>
+                    <NavLink to="/" className={({ isActive }) => isActive ? "menuOption active" : "menuOption"} end>Summary</NavLink>
+                    <NavLink to="/info" className={({ isActive }) => isActive ? "menuOption active" : "menuOption"}>Info</NavLink>
+                    <NavLink to="/gas-fee" className={({ isActive }) => isActive ? "menuOption active" : "menuOption"}>Gas Fee</NavLink>
+                    <NavLink to="/mempool" className={({ isActive }) => isActive ? "menuOption active" : "menuOption"}>Mempool</NavLink>
                   </>
                 }
               </div>
 
-              {/* <Button type={"primary"}>Connect Wallet</Button> */}
-              <div><ConnectButton /></div>
-              <div><ThemeButton /></div>
+              <div className="headerRight">
+                <ConnectButton />
+                <ThemeButton />
+              </div>
             </Header>
             <Content className="content">
               {isConnected ? (

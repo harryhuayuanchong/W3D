@@ -10,7 +10,11 @@ app.use(cors());
 app.use(express.json());
 
 function convertArrayToObjects(arr) {
-  console.log(arr);
+  if (!Array.isArray(arr)) {
+    console.log("Provided data is not an array:", arr);
+    return [];
+  }
+
   const dataArray = arr.map((transaction, index) => ({
     key: (arr.length + 1 - index).toString(),
     type: transaction[0],
@@ -54,17 +58,15 @@ app.get("/sepolia/getNameAndBalance", async (req, res) => {
   ).toFixed(2);
 
   // runContractFunction
-  // const fourResponse = await Moralis.EvmApi.utils.runContractFunction({
-  //   chain: "11155111",
-  //   address: "0x2E7789b11B5F6fcA05dC1dc74e7dA9C41500b3d7",
-  //   functionName: "getMyHistory",
-  //   abi: ABI,
-  //   params: { _user: userAddress },
-  // });
+  const fourResponse = await Moralis.EvmApi.utils.runContractFunction({
+    chain: "11155111",
+    address: "0x2E7789b11B5F6fcA05dC1dc74e7dA9C41500b3d7",
+    functionName: "getMyHistory",
+    abi: ABI,
+    params: { _user: userAddress },
+  });
 
-  // console.log(fourResponse);
-
-  // const jsonResponseHistory = convertArrayToObjects(fourResponse)
+  const jsonResponseHistory = convertArrayToObjects(fourResponse.raw);
 
   const fiveResponse = await Moralis.EvmApi.utils.runContractFunction({
     chain: "11155111",
@@ -80,7 +82,7 @@ app.get("/sepolia/getNameAndBalance", async (req, res) => {
     name: jsonResponseName,
     balance: jsonResponseBal,
     dollars: jsonResponseDollars,
-    // history: jsonResponseHistory,
+    history: jsonResponseHistory,
     requests: jsonResponseRequests,
   }
 

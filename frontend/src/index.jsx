@@ -28,7 +28,7 @@ import {
 const { chains, provider, webSocketProvider, publicClient } = configureChains(
   [mainnet, sepolia, polygon, polygonMumbai, optimism, arbitrum, base, zora],
   [
-    alchemyProvider({ apiKey: import.meta.env.VITE_ALCHEMY_MAINNET_API_KEY }),
+    alchemyProvider({ apiKey: import.meta.env.VITE_ALCHEMY_API_KEY }),
     publicProvider()
   ]
 );

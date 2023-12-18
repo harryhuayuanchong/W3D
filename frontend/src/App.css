@@ -23,8 +23,19 @@
   height: 40px;
 }
 
+.headerRight {
+  display: flex;
+  gap: 20px;
+}
+
 .menuOption {
   line-height: 40px;
+  text-decoration: none;
+  color: black;
+}
+
+.menuOption.active {
+  border-bottom: 1.5px solid black;
 }
 
 .logo{
@@ -33,9 +44,12 @@
 
 .content {
   padding-top: 20px;
+  padding-bottom: 20px;
   display: flex;
   justify-content: center;
-  align-items: flex-start; 
+  align-items: flex-start;
+  padding-left: 100px;
+  padding-right: 100px;
   gap: 20px;
   background-color: white;
 }

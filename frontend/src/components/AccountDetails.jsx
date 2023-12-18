@@ -14,7 +14,6 @@ function AccountDetails({ address, name, balance }) {
           <div className="accountDetailBody">
             {" "}
             Address: {address.slice(0, 4)}...{address.slice(38)}
-            Address:
           </div>
         </div>
       </div>
@@ -25,10 +24,10 @@ function AccountDetails({ address, name, balance }) {
           <div className="accountDetailBody">{balance} Matic</div>
         </div>
       </div>
-      <div className="balanceOptions">
+      {/* <div className="balanceOptions">
         <div className="extraOption">Set Username</div>
         <div className="extraOption">Switch Accounts</div>
-      </div>
+      </div> */}
     </Card>
   );
 }
