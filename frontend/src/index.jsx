@@ -59,7 +59,7 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <WagmiConfig config={wagmiConfig}>
         <ChakraProvider resetCSS={false} theme={theme} >
-          <RainbowKitProvider chains={chains}>
+          <RainbowKitProvider chains={chains} modalSize="compact" >
             <App />
           </RainbowKitProvider>
         </ChakraProvider>
