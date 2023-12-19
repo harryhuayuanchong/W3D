@@ -14,29 +14,29 @@ const hre = require("hardhat");
 
 async function main() {
   // Payment Deployment (Completed!)
-  // const Payment = await hre.ethers.getContractFactory("Payment");
-  // const payment = await Payment.deploy();
+  const Payment = await hre.ethers.getContractFactory("Payment");
+  const payment = await Payment.deploy();
 
-  // await payment.waitForDeployment();
+  await payment.waitForDeployment();
 
-  // console.log("Payment deployed to: ", payment.target); // address
+  console.log("Payment deployed to: ", payment.target); // address
 
-  const [deployer] = await hre.ethers.getSigners();
+  // const [deployer] = await hre.ethers.getSigners();
 
-  console.log("Deploying contracts with the account:", deployer.address);
+  // console.log("Deploying contracts with the account:", deployer.address);
 
   // console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  const Token = await hre.ethers.getContractFactory("Chainlink");
-  const token = await Token.deploy();
+  // const Token = await hre.ethers.getContractFactory("Chainlink");
+  // const token = await Token.deploy();
 
-  console.log("Token address:", token.target);
+  // console.log("Token address:", token.target);
  
-  let price1 = await token.getETHUSD();
-  console.log(`Eth price is: ${price1}`);
+  // let price1 = await token.getETHUSD();
+  // console.log(`Eth price is: ${price1}`);
 
-  let price2 = await token.getLINKUSD();
-  console.log(`Link price is: ${price2}`); 
+  // let price2 = await token.getLINKUSD();
+  // console.log(`Link price is: ${price2}`); 
 }
 
 // We recommend this pattern to be able to use async/await everywhere
