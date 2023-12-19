@@ -4,7 +4,6 @@ import CurrentBalance from "./components/CurrentBalance";
 import RequestAndPay from "./components/RequestAndPay";
 import AccountDetails from "./components/AccountDetails";
 import RecentActivity from "./components/RecentActivity";
-import RecentTransaction from "./components/RecentTransaction";
 import { MainnetTracker, GasFeeTracker } from "./components/GasFeeTracker";
 import { Mempool, MempoolTesting } from "./components/Mempool";
 import { ConnectButton } from "@rainbow-me/rainbowkit";

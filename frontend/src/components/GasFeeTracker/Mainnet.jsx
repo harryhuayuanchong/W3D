@@ -24,6 +24,7 @@ const MainnetTracker = () => {
         safeGasPrice: '',
         proposeGasPrice: '',
         fastGasPrice: '',
+        lastBlock: '',
     });
     const [isLoading, setIsLoading] = useState(true);
     const [timer,setTimer] = useState(10);
@@ -49,7 +50,9 @@ const MainnetTracker = () => {
                       safeGasPrice: response.data.result.SafeGasPrice,
                       proposeGasPrice: response.data.result.ProposeGasPrice,
                       fastGasPrice: response.data.result.FastGasPrice,
-                      // ...other properties
+                      lastBlock: response.data.result.LastBlock,
+                      suggestBaseFee: response.data.result.suggestBaseFee,
+                      gasUsedRatio: response.data.result.gasUsedRatio,
                     });
                   }
                 })
@@ -76,22 +79,11 @@ const MainnetTracker = () => {
                 clearInterval(intervalId);
                 clearInterval(countdown);
             }
-        }, []);          
+        }, []);
 
-    const allPricesLoaded = gasPrices.safeGasPrice && gasPrices.proposeGasPrice && gasPrices.fastGasPrice;
+    const allPricesLoaded = gasPrices.safeGasPrice && gasPrices.proposeGasPrice && gasPrices.fastGasPrice && gasPrices.lastBlock && gasPrices.suggestBaseFee && gasPrices.gasUsedRatio
     const bgColor = useColorModeValue('gray.50', 'gray.700');
 
-    // return (
-    //     <div>
-    //         <h2>Ethereum Gas Prices</h2>
-    //         <p>Safe Gas Price: {gasPrices.safeGasPrice} Gwei</p>
-    //         <p>Proposed Gas Price: {gasPrices.proposeGasPrice} Gwei</p>
-    //         <p>Fast Gas Price: {gasPrices.fastGasPrice} Gwei</p>
-    //         <p>Last Block: {gasPrices.lastBlock} Gwei</p>
-    //         <p>suggestBaseFee: {gasPrices.suggestBaseFee} Gwei</p>
-    //         <p>GasUsedRatio: {gasPrices.gasUsedRatio} Gwei</p>
-    //     </div>
-    // );
     return (
         <HStack
             padding={5}
@@ -113,11 +105,11 @@ const MainnetTracker = () => {
                 </Flex>
                 {/* <InfoIcon /> */}
                 <Box position='relative' display='inline-flex'>
-                    <CircularProgress value={timer * 10} size="50px" thickness="4px">
+                    <CircularProgress value={timer * 10} size="50px" thickness="4px" >
                         <CircularProgressLabel>{timer}</CircularProgressLabel>
                     </CircularProgress>
                 </Box>
-                <Text mt={4}>Real-time Latest Price | 2023-12-14 01:13:07</Text>
+                <Text mt={4}>Last Block {gasPrices.lastBlock}</Text>
             </Box>
 
             <VStack>

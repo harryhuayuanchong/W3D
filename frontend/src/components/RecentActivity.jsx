@@ -109,7 +109,7 @@ const columns = [
 function RecentActivity({}) {
 
   return (
-    <Card title="Recent Activity" style={{ width: "100%", minHeight: "663px" }}>
+    <Card title="Recent Activity" style={{ width: "100%" }}>
       {history && 
       <Table
         dataSource={history}
