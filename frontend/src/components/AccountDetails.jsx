@@ -1,9 +1,9 @@
+/* eslint-disable react/prop-types */
 import React from "react";
 import { Card } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import matic from "../matic.png";
 
-// eslint-disable-next-line no-empty-pattern
 function AccountDetails({ address, name, balance }) {
   return (
     <Card title="Account Details" style={{ width: "100%" }}>
