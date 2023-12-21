@@ -37,9 +37,9 @@ const MempoolMonitor = () => {
 
         // Monitoring the pending transactions
         let i = 0;
-        newProvider.on("pending", throttle(async(txHash) => {
-            if (txHash && i < 100) {
-                setPendingTransactions(prevTxs => [...prevTxs, txHash]);
+        newProvider.on("pending", throttle(async(tx) => {
+            if (tx && i < 100) {
+                setPendingTransactions(prevTxs => [...prevTxs, tx]);
                 i++;
             }
         }, 1000));
@@ -51,12 +51,27 @@ const MempoolMonitor = () => {
         };
     }, []);
 
+    const logTxn = (data, gas) => {
+        return {
+            tokenIn: data.params.tokenIn,
+            tokenOut: data.params.tokenOut,
+            amount: data.params.amountOutMinimum.toString(),
+            gasPrice: gas.toString()
+        };
+    };
+
     // Rendering
     return (
         <div>
             <h2>Pending Transactions:</h2>
-            {pendingTransactions.map((txHash, index) => (
-                <div key={index}>{txHash}</div>
+            {pendingTransactions.map((tx, index) => (
+                <div key={index}>
+                    <p>Token In: {tx.tokenIn}</p>
+                    <p>Token Out: {tx.tokenOut}</p>
+                    <p>Amount: {tx.amount}</p>
+                    <p>Gas Price: {tx.gasPrice}</p>
+                    <hr />
+                </div>
             ))}
         </div>
     );

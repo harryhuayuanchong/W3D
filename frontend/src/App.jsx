@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import "./App.css";
 import { Layout } from "antd";
 import CurrentBalance from "./components/CurrentBalance";
@@ -5,7 +6,7 @@ import RequestAndPay from "./components/RequestAndPay";
 import AccountDetails from "./components/AccountDetails";
 import RecentActivity from "./components/RecentActivity";
 import { MainnetTracker, GasFeeTracker } from "./components/GasFeeTracker";
-import { Mempool, MempoolTesting } from "./components/Mempool";
+import { Mempool, MempoolTesting, MempoolUniSwapV3 } from "./components/Mempool";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import ThemeButton from "./components/ThemeButton";
 import { BrowserRouter as Router, Routes, Route, NavLink } from "react-router-dom";
