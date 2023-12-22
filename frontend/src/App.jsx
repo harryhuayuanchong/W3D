@@ -6,6 +6,7 @@ import RequestAndPay from "./components/RequestAndPay";
 import AccountDetails from "./components/AccountDetails";
 import RecentActivity from "./components/RecentActivity";
 import { MainnetTracker, GasFeeTracker } from "./components/GasFeeTracker";
+import { InfuraEstimator } from "./components/GasFeeEstimator";
 import { Mempool, MempoolTesting, MempoolUniSwapV3 } from "./components/Mempool";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import ThemeButton from "./components/ThemeButton";
@@ -57,6 +58,7 @@ function App() {
                   <>
                     <NavLink to="/" className={({ isActive }) => isActive ? "menuOption active" : "menuOption"} end>Summary</NavLink>
                     <NavLink to="/gas-fee" className={({ isActive }) => isActive ? "menuOption active" : "menuOption"}>Gas Fee</NavLink>
+                    <NavLink to="/estimator" className={({ isActive }) => isActive ? "menuOption active" : "menuOption"}>Gas Estimator</NavLink>
                     <NavLink to="/mempool" className={({ isActive }) => isActive ? "menuOption active" : "menuOption"}>Mempool</NavLink>
                   </>
                 }
@@ -88,6 +90,7 @@ function App() {
                     </>
                   } />
                   <Route path="/gas-fee" element={<MainnetTracker />} />
+                  <Route path="/estimator" element={<InfuraEstimator />} />
                   <Route path="/mempool" element={<MempoolTesting />} />
                 </Routes>
               ) : (
