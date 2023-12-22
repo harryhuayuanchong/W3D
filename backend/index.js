@@ -1,4 +1,5 @@
 const express = require("express");
+// const fetch = require("node-fetch");
 const Moralis = require("moralis").default;
 const app = express();
 const cors = require("cors");
@@ -88,6 +89,30 @@ app.get("/sepolia/getNameAndBalance", async (req, res) => {
 
   return res.status(200).json(jsonResponse);
 });
+
+app.get("/getGasPrice", async (req, res) => {
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      "X-API-Key": process.env.MORALIS_KEY,
+    },
+  }
+
+  try {
+    fetch(
+      "https://mainnet-aptos-api.moralis.io/transactions/estimate_gas_price",
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        return res.status(200).json(response);
+      });
+  } catch (e) {
+    console.log(`Something went wrong ${e}`);
+    return res.status(400).json();
+  }
+})
 
 Moralis.start({
   apiKey: process.env.MORALIS_KEY,

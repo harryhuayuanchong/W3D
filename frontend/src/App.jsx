@@ -6,7 +6,7 @@ import RequestAndPay from "./components/RequestAndPay";
 import AccountDetails from "./components/AccountDetails";
 import RecentActivity from "./components/RecentActivity";
 import { MainnetTracker, GasFeeTracker } from "./components/GasFeeTracker";
-import { InfuraEstimator } from "./components/GasFeeEstimator";
+import { InfuraEstimator, MoralisEstimator } from "./components/GasFeeEstimator";
 import { Mempool, MempoolTesting, MempoolUniSwapV3 } from "./components/Mempool";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import ThemeButton from "./components/ThemeButton";
@@ -90,7 +90,7 @@ function App() {
                     </>
                   } />
                   <Route path="/gas-fee" element={<MainnetTracker />} />
-                  <Route path="/estimator" element={<InfuraEstimator />} />
+                  <Route path="/estimator" element={<MoralisEstimator />} />
                   <Route path="/mempool" element={<MempoolTesting />} />
                 </Routes>
               ) : (
