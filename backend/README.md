@@ -54,7 +54,7 @@ A step by step series of examples that tell you how to get a development environ
 Once the server is running, you can access the API endpoints to fetch the gas price data.
 
 # Backend System Structure
-![Alt text](W3D_BackendSystemStructure.png)
+![Alt text](image-1.png)
 
 ## Project Structure
 
