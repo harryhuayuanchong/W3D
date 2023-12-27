@@ -6,9 +6,6 @@ This project is a backend service built on Node.js that interacts with blockchai
 
 This Node.js project interfaces with blockchain data sources like Etherscan and Infura to fetch gas price information, processes it, and exposes it through a RESTful API. The data is stored in a MongoDB database for easy access by front-end applications.
 
-# Backend System Structure
-![Alt text](W3D_BackendSystemStructure.png)
-
 ## Getting Started
 
 These instructions will get your copy of the project up and running on your local machine for development and testing purposes.
@@ -55,6 +52,9 @@ A step by step series of examples that tell you how to get a development environ
 ## Usage
 
 Once the server is running, you can access the API endpoints to fetch the gas price data.
+
+# Backend System Structure
+![Alt text](W3D_BackendSystemStructure.png)
 
 ## Project Structure
 
